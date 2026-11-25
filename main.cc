@@ -1,0 +1,24 @@
+#include "SelectServer.hpp"
+#include <iostream>
+#include <memory>
+
+// ./selectserver 8080
+int main(int argc, char *argv[])
+{
+    if(argc != 2)
+    {
+        std::cout  << "Usage: "<< argv[0] << " port" << std::endl;
+        return 1;
+    }
+
+    ENABLE_CONSOLE_LOG_STRATEGY();
+
+
+    uint16_t port = std::stoi(argv[1]);
+
+    std::unique_ptr<SelectServer> svr(new SelectServer(port));
+
+    svr->Loop();
+
+    return 0;
+}
