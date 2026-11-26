@@ -11,7 +11,6 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    ENABLE_CONSOLE_LOG_STRATEGY();
 
 
     uint16_t port = std::stoi(argv[1]);

@@ -6,13 +6,11 @@
 #include <arpa/inet.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
-#include "Logger.hpp"
+#include "logger.h"
 #include "InetAddr.hpp"
 
 namespace NS_SOCKET_MODULE
 {
-    using namespace NS_LOG_MODULE;
-
     static const int gbacklog = 16;
 
     enum
@@ -76,7 +74,7 @@ namespace NS_SOCKET_MODULE
             _sockfd = socket(AF_INET, SOCK_STREAM, 0);
             if (_sockfd < 0)
             {
-                LOG(LogLevel::FATAL) << "create socket error";
+                LOG_FATAL("create socket error");
                 exit(SOCKET_ERR);
             }
             int opt = 1;
@@ -87,7 +85,7 @@ namespace NS_SOCKET_MODULE
             InetAddr addr(port);
             if (bind(_sockfd, addr.NetAddress(), addr.Len()) != 0)
             {
-                LOG(LogLevel::FATAL) << "bind socket error";
+                LOG_FATAL("bind socket error");
                 exit(BIND_ERR);
             }
         }
@@ -95,7 +93,7 @@ namespace NS_SOCKET_MODULE
         {
             if (listen(_sockfd, gbacklog) != 0)
             {
-                LOG(LogLevel::FATAL) << "listen socket error";
+                LOG_FATAL("listen socket error");
                 exit(LISTEN_ERR);
             }
         }
@@ -107,7 +105,7 @@ namespace NS_SOCKET_MODULE
             int sockfd = accept(_sockfd, CONV(&addr), &len);
             if(sockfd < 0)
             {
-                LOG(LogLevel::WARNING) << "accept error";
+                LOG_WARN("accept error");
                 // return nullptr;
                 return -1;
             }
